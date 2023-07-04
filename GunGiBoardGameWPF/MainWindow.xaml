@@ -1,0 +1,12 @@
+﻿<Window
+	x:Class="GunGiBoardGameWPF.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:gameholder="clr-namespace:GunGiBoardGameWPF.GameHolder"
+	xmlns:local="clr-namespace:GunGiBoardGameWPF"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	Title="{Binding Source={x:Static gameholder:Constant.WINDOW_TITLE}}"
+	Width="{Binding Source={x:Static gameholder:Constant.WINDOW_SIZE_WIDTH}}"
+	Height="{Binding Source={x:Static gameholder:Constant.WINDOW_SIZE_HEIGHT}}"
+	mc:Ignorable="d" />
