@@ -34,7 +34,8 @@ namespace GunGiBoardGameWPF.GameHolder.GameState
 
 		public void Hide()
 		{
-
+			this.Background.Visibility = System.Windows.Visibility.Hidden;
+			this.TextBlock.Visibility = System.Windows.Visibility.Hidden;
 		}
 	}
 }

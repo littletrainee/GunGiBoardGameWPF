@@ -21,7 +21,7 @@
 		public const int MANUAL_ARRANGEMENT_BUTTON_X = 525;
 		public const int ARRANGEMENT_BUTTON_Y = 300;
 		public const int ARRANGEMENT_BUTTON_SIZE = 149;
-		public const int PREPARE_FOR_GAMING_TIME = 1;
+		public const int PREPARE_FOR_GAMING_TIME = 3;
 		public const int BOARD_WIDTH = 550;
 		public const int BOARD_HEIGHT = 550;
 		public const int BOARD_X = 237;

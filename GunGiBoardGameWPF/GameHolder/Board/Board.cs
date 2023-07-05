@@ -11,6 +11,10 @@ namespace GunGiBoardGameWPF.GameHolder.Board
 		public Rectangle BaseColor { get; set; }
 		public Dictionary<Point, Block> Blocks { get; set; }
 
+		/// <summary>
+		/// 初始化Board物件，並繪製到canvas上
+		/// </summary>
+		/// <param name="canvas">畫布物件</param>
 		public Board(ref Canvas canvas)
 		{
 			this.BaseColor = new Rectangle()
@@ -24,6 +28,7 @@ namespace GunGiBoardGameWPF.GameHolder.Board
 			Canvas.SetLeft(this.BaseColor, Constant.BOARD_X);
 			Canvas.SetTop(this.BaseColor, Constant.BOARD_Y);
 			canvas.Children.Add(this.BaseColor);
+
 			int distance = Constant.BLOCK_SIZE +1;
 			this.Blocks = new Dictionary<Point, Block>();
 
@@ -42,7 +47,7 @@ namespace GunGiBoardGameWPF.GameHolder.Board
 							Height = Constant.BLOCK_SIZE,
 							Fill = CustmerColor.BoardColor,
 							Stroke = Brushes.Black,
-							StrokeThickness = 1
+							StrokeThickness = 1,
 						}
 					};
 					Canvas.SetLeft(tempBlock.Background, tempBlock.Coordinate.X);

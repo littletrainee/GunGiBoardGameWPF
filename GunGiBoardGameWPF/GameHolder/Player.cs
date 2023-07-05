@@ -143,7 +143,6 @@ namespace GunGiBoardGameWPF.GameHolder
 				{
 					tempKoma.SetCoordinate(new Point(c, r), ref canvas, true);
 				}
-				//tempKoma.Hide();
 
 				int repeat = 0;
 				switch (s.ToString())

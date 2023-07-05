@@ -124,7 +124,7 @@ namespace GunGiBoardGameWPF.GameHolder.GameState
 		/// <param name="player1">玩家1物件</param>
 		/// <param name="player2">玩家2物件</param>
 		/// <param name="canvas">畫布物件</param>
-		public void SetLevel(ref Player player1, ref Player player2, ref Canvas canvas)
+		public void SetLevel(ref Canvas canvas)
 		{
 			if (this.LevelHolder.CurrentLevel == Enum.Level.BEGINNER || this.LevelHolder.CurrentLevel == Enum.Level.ELEMENTARY)
 			{
@@ -134,7 +134,7 @@ namespace GunGiBoardGameWPF.GameHolder.GameState
 			else
 			{
 				this.ArrangementHolder.ArrangementBy = Enum.Arrangement.MANUAL;
-				this.DelayChangePhaseTo(Phase.SET_COUNTDOWN_FOR_GAMING);
+				this.DelayChangePhaseTo(Phase.COUNTDOWN_FOR_GAMING);
 			}
 
 			if (this.LevelHolder.CurrentLevel == Enum.Level.ADVANCED)
@@ -147,15 +147,26 @@ namespace GunGiBoardGameWPF.GameHolder.GameState
 			}
 
 			this.SetFirst();
-
-			player1.SetKomaDaiPosition(this.LevelHolder.CurrentLevel, ref canvas);
-			player2.SetKomaDaiPosition(this.LevelHolder.CurrentLevel, ref canvas);
 		}
 
 		private void SetFirst()
 		{
 			this.ColorHolder.Own = Brushes.White;
 			this.ColorHolder.Turn = Brushes.White;
+		}
+
+		public void SelectRecommendOrManualArrangement(Point point)
+		{
+			if (this.ArrangementHolder.RecommendArrangement.OnBlock(point))
+			{
+				this.ArrangementHolder.ArrangementBy = Enum.Arrangement.RECOMMEND;
+				this.ArrangementHolder.Hide();
+			}
+			else if (this.ArrangementHolder.ManualArrangement.OnBlock(point))
+			{
+				this.ArrangementHolder.ArrangementBy = Enum.Arrangement.MANUAL;
+				this.ArrangementHolder.Hide();
+			}
 		}
 
 	}

@@ -70,5 +70,12 @@ namespace GunGiBoardGameWPF.GameHolder.GameState
 			};
 			this.ManualArrangement.SetPosition(ref canvas);
 		}
+
+		public void Hide()
+		{
+			this.Title.Visibility = Visibility.Hidden;
+			this.RecommendArrangement.Hide();
+			this.ManualArrangement.Hide();
+		}
 	}
 }
