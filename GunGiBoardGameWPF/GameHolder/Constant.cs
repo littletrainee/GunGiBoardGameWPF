@@ -37,12 +37,12 @@
 		public const int KOMA_ON_OPPONENT_KOMADAI_X =194;
 		public const int KOMA_ON_OPPONENT_KOMADAI_Y = 234;
 		public const int KOMA_SIZE = 40;
-		public const int TIMER_X = 850;
-		public const int TIMER_Y = 109;
+		public const int TIMER_X = 851;
+		public const int TIMER_Y = 110;
 		public const int TIMER_WIDTH = 120;
 		public const int TIMER_HEIGHT = 240;
-		public const int TIMER_SIZE = 118;
-		public const int REMAINING_TIME = 600;
+		public const int TIMER_SIZE = 120;
+		public const int REMAINING_TIME = 601;
 		public const int SUMI_BUTTON_X = 462;
 		public const int SUMI_BUTTON_Y = 665;
 		public const int SUMI_BUTTON_WIDTH = 100;

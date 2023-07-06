@@ -149,12 +149,19 @@ namespace GunGiBoardGameWPF.GameHolder.GameState
 			this.SetFirst();
 		}
 
+		/// <summary>
+		/// 設定先手與最初的執駒權
+		/// </summary>
 		private void SetFirst()
 		{
 			this.ColorHolder.Own = Brushes.White;
 			this.ColorHolder.Turn = Brushes.White;
 		}
 
+		/// <summary>
+		/// 若玩家選擇入門或初階時選取推薦布陣或是自訂布陣選項的判斷
+		/// </summary>
+		/// <param name="point"></param>
 		public void SelectRecommendOrManualArrangement(Point point)
 		{
 			if (this.ArrangementHolder.RecommendArrangement.OnBlock(point))
@@ -168,7 +175,6 @@ namespace GunGiBoardGameWPF.GameHolder.GameState
 				this.ArrangementHolder.Hide();
 			}
 		}
-
 	}
 }
 

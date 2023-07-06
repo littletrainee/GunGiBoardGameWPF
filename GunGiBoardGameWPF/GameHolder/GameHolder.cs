@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,6 +25,11 @@ namespace GunGiBoardGameWPF.GameHolder
 		}
 
 
+		/// <summary>
+		/// 玩家的選擇未派事件，當玩家的選擇為滑鼠按下時判斷
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		public async void PlayerSelect(object sender, MouseButtonEventArgs e)
 		{
 			Point p = e.GetPosition(this.Canvas);
@@ -56,10 +60,12 @@ namespace GunGiBoardGameWPF.GameHolder
 				case Enum.Phase.SELECT_RECOMMEND_OR_MANUAL_ARRANGEMENT:
 					this.GameState.SelectRecommendOrManualArrangement(p);
 					await Task.Delay(Constant.DELAY);
-					this.PrepareForGaming = new Timer(Constant.PREPARE_FOR_GAMING_TIME, new Point(0, 0), ref this.Canvas, Enum.Phase.COUNTDOWN_FOR_GAMING);
+					this.PrepareForGaming = new Timer(Constant.PREPARE_FOR_GAMING_TIME, new Point(0, 0), ref this.Canvas, Enum.TimerChoice.BEFORE_GAMING);
 					this.GameState.Phase = Enum.Phase.COUNTDOWN_FOR_GAMING;
 					this.PrepareForGaming.CountDown(Enum.Phase.COUNTDOWN_FOR_GAMING);
 					this.BeginCountDownForGaming();
+					break;
+				case Enum.Phase.SELECT_KOMA:
 					break;
 			}
 		}
@@ -73,27 +79,23 @@ namespace GunGiBoardGameWPF.GameHolder
 			bool loop = true;
 			while (loop)
 			{
-				// 使用另一個線程來監控
+				// 將所有權返回主線程並使用另一個線程來監控this.PrepareForGaming.TextBlock.Text
 				await Task.Run(() =>
 				{
 					Application.Current.Dispatcher.Invoke(() =>
 					{
-						Debug.Write($"This.PrepareForGaming.TextBlock.Text is {this.PrepareForGaming.TextBlock.Text}, ");
 						// 當監控的數值達到目標數值時
 						if (this.PrepareForGaming.TextBlock.Text == "0")
 						{
-							Debug.WriteLine("InitilizationEachObject");
+							this.PrepareForGaming.StopCountDown.Writer.TryWrite(true);
 							this.PrepareForGaming.TextBlock.Visibility = Visibility.Hidden;
+							this.GameState.Phase = Enum.Phase.SELECT_KOMA;
 							loop = false;
-						}
-						else
-						{
-							Debug.WriteLine("continue Check");
 						}
 					});
 				});
 			}
-			// 延遲0.5秒後再進行後續的物件初始化
+			// 將所有權返回給主線程並延遲0.5秒後再進行後續的物件初始化
 			await Task.Delay(Constant.DELAY);
 			this.InitilizationEachObject();
 		}
@@ -106,7 +108,14 @@ namespace GunGiBoardGameWPF.GameHolder
 			this.Board = new Board.Board(ref this.Canvas);
 			this.Player1.SetKomaDaiPosition(this.GameState.LevelHolder.CurrentLevel, ref this.Canvas);
 			this.Player2.SetKomaDaiPosition(this.GameState.LevelHolder.CurrentLevel, ref this.Canvas);
+			this.Player1Timer = new Timer(Constant.REMAINING_TIME, new Point(Constant.TIMER_X, Constant.TIMER_Y + Constant.TIMER_HEIGHT / 2), ref this.Canvas, Enum.TimerChoice.OWN);
+			this.Player2Timer = new Timer(Constant.REMAINING_TIME, new Point(Constant.TIMER_X, Constant.TIMER_Y), ref this.Canvas, Enum.TimerChoice.OPPONENT);
 
+			if (this.GameState.ColorHolder.Turn == this.Player1.SelfColor)
+			{
+				this.Player1Timer.Background.Fill = CustmerColor.ConfirmColor;
+				this.Player1Timer.CountDown(this.GameState.Phase);
+			}
 		}
 	}
 }

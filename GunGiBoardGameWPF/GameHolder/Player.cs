@@ -17,7 +17,7 @@ namespace GunGiBoardGameWPF.GameHolder
 		Rectangle KomaDaiBackground { get; set; }
 		Point KomaDaiCoordinate { get; set; }
 		Point KomaOnKomaDaiCoorDinate { get; set; }
-		Brush SelfColor { get; set; }
+		public Brush SelfColor { get; set; }
 		bool IsOwn { get; set; }
 		bool IsSetSuI { get; set; }
 		bool IsSuMi { get; set; }
@@ -32,6 +32,11 @@ namespace GunGiBoardGameWPF.GameHolder
 			this.IsOwn = isOwn;
 		}
 
+		/// <summary>
+		/// 設定駒台的位置
+		/// </summary>
+		/// <param name="level">玩家選擇的階級</param>
+		/// <param name="canvas">目標畫布</param>
 		public void SetKomaDaiPosition(Enum.Level level, ref Canvas canvas)
 		{
 			if (this.IsOwn)
@@ -67,7 +72,6 @@ namespace GunGiBoardGameWPF.GameHolder
 				Fill = CustmerColor.BoardColor,
 				Stroke = Brushes.Black,
 				StrokeThickness = 1,
-				//Visibility = Visibility.Hidden
 			};
 			Canvas.SetLeft(this.KomaDaiBackground, this.KomaDaiCoordinate.X);
 			Canvas.SetTop(this.KomaDaiBackground, this.KomaDaiCoordinate.Y);
@@ -76,12 +80,17 @@ namespace GunGiBoardGameWPF.GameHolder
 			this.SetKomaDai(level, ref canvas);
 		}
 
+		/// <summary>
+		/// 設定駒台
+		/// </summary>
+		/// <param name="level">選擇的等級</param>
+		/// <param name="canvas">目標畫布</param>
 		private void SetKomaDai(Enum.Level level, ref Canvas canvas)
 		{
 			string source = (level) switch
 			{
 				Enum.Level.BEGINNER => Constant.ALLKOMA.Substring(0, Constant.ALLKOMA.IndexOf("兵") + 1),
-				Enum.Level.ELEMENTARY => Constant.ALLKOMA.Substring(0,Constant.ALLKOMA.IndexOf("弓") +1),
+				Enum.Level.ELEMENTARY => Constant.ALLKOMA.Substring(0,Constant.ALLKOMA.IndexOf("弓") + 1),
 				_ => Constant.ALLKOMA,
 			};
 
